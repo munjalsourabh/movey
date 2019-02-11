@@ -53,7 +53,7 @@ class Upcoming extends Component {
  dialogImgSrc = '';
 
   componentDidMount() {
-    fetch("https://api.themoviedb.org/3/movie/upcoming?region=IN&api_key=6d327dfc65804feb593492f59fdabaca")
+    fetch("https://api.themoviedb.org/3/movie/upcoming?region=US&api_key=6d327dfc65804feb593492f59fdabaca")
       .then(
         (result) => {
           result.json().then((response) => {
