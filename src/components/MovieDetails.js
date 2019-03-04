@@ -50,7 +50,7 @@ class MovieDetails extends Component {
     //   }
     //   this.setState({videoDetails: videoUrl};
     // })
-    this.fetchVideoDetails();
+    // this.fetchVideoDetails();
 
   }
 
@@ -133,12 +133,26 @@ class MovieDetails extends Component {
              </Grid>
              <Grid item xs={6}>
                {
-                 this.state.videoDetails ?
-                   (<iframe width="560" height="315"
-                             src={`//www.youtube.com/embed/${this.props.trailerDetails.trailer.results[0].key}`}
-                             frameBorder="0" allowFullScreen>
-                     </iframe>):
+                 this.props.trailerDetails.trailer && this.props.trailerDetails.trailer.results[0] ?
+                   (this.props.trailerDetails.trailer.results.map((trailer) => {
+                     return (
+                       <iframe width="560" height="315"
+                               src={`//www.youtube.com/embed/${trailer.key}`}
+                               frameBorder="0"
+                               allowFullScreen>
+                        </iframe>
+                     )
+                     })
+                   ) :
                    ''
+                 // this.props.trailerDetails.trailer && this.props.trailerDetails.trailer.results[0] ?
+                 //     (<iframe width="560" height="315"
+                 //             src={`//www.youtube.com/embed/${this.props.trailerDetails.trailer.results[0].key}`}
+                 //             frameBorder="0"
+                 //             allowFullScreen>
+                 //       </iframe>
+                 //   ) :
+                 //   ''
                }
              </Grid>
          </Grid>

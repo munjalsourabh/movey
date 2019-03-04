@@ -50,16 +50,39 @@ class Upcoming extends Component {
     dialogData: {}
   };
 
- dialogImgSrc = '';
+  dialogImgSrc = '';
+
+  getCountryCode() {
+    let position;
+    const showPosition = async (position) => {
+      position = `${position.coords.latitude},${position.coords.longitude}`;
+      console.log('position');
+      console.log(position);
+      const googleMap = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${position}&sensor=false&key=AIzaSyBCSnpa_dQLRuX4E0kfiyneSMQ9I1_spTs`);
+      const result = await googleMap.json();
+      const addressComp = result.results.find((r) => {
+        return r.types.indexOf('country') > -1;
+      });
+      this.fetchUpcoming(addressComp.address_components[0].short_name);
+    }
+    const p = navigator.geolocation.getCurrentPosition(showPosition);
+
+  }
 
   componentDidMount() {
-    fetch("https://api.themoviedb.org/3/movie/upcoming?region=US&api_key=6d327dfc65804feb593492f59fdabaca")
+    this.getCountryCode();
+
+	}
+
+  fetchUpcoming(country) {
+    fetch(`https://api.themoviedb.org/3/movie/upcoming?region=${country}&api_key=6d327dfc65804feb593492f59fdabaca`)
       .then(
         (result) => {
           result.json().then((response) => {
             console.log('upcoming movies ', response);
             this.setState({
-            	movies: response.results
+              movies: response.results
             })
         },
         // Note: it's important to handle errors here
@@ -72,8 +95,8 @@ class Upcoming extends Component {
           });
         }
       )
-	  });
-	}
+    });
+  }
 
 	openDialog = (dialogData) => {
     this.dialogImgSrc = `http://image.tmdb.org/t/p/w780/${dialogData.posterPath}`;
