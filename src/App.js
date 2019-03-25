@@ -21,6 +21,9 @@ import store from  './store';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Upcoming from './components/Upcoming';
+import UpcomingContainer from './components/Upcoming/UpcomingContainer';
+
+UpcomingContainer
 
 const elementStyles = {
   root: {
@@ -142,6 +145,7 @@ class App extends Component {
               <Route exact path='/' component={Upcoming}/>
               <Route exact path='/search' component={SearchMovies}/>
               <Route exact path='/details' component={MovieDetails}/>
+              <Route exact path='/upcoming' component={UpcomingContainer}/>
             </Switch>
           </Provider>
         </div>

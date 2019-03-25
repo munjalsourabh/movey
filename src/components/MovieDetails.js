@@ -29,7 +29,6 @@ class MovieDetails extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    debugger;
     if (this.props.status !== nextProps.status) {
       this.setState({
         status: nextProps.status
@@ -167,7 +166,7 @@ const bindActionsToDispatch = dispatch => ({
       fetchVideoDetails: (movieId) => dispatch({type: 'FETCH_VIDEO_DETAILS', payload: movieId})
 });
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
     return {
         entitiy: state['selectedEntityReducer'],
         language: state['languageReducer'],
