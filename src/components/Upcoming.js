@@ -53,21 +53,19 @@ class Upcoming extends Component {
   dialogImgSrc = '';
 
   getCountryCode() {
-    let position;
-    const showPosition = async (position) => {
-      position = `${position.coords.latitude},${position.coords.longitude}`;
-      console.log('position');
-      console.log(position);
-      const googleMap = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${position}&sensor=false&key=AIzaSyDc2di3k3AM2A7fDKEybCIe8VU85zg1XNw`);
-      const result = await googleMap.json();
-      const addressComp = result.results.find((r) => {
-        return r.types.indexOf('country') > -1;
-      });
-      this.fetchUpcoming(addressComp.address_components[0].short_name);
-    }
-    const p = navigator.geolocation.getCurrentPosition(showPosition);
-
+	const showPosition = async (position) => {
+	// position = `${position.coords.latitude},${position.coords.longitude}`;
+	// console.log('position');
+	// console.log(position);
+	const googleMap = await fetch(
+	`http://api.geonames.org/countryCodeJSON?lat=${position.coords.latitude}&lng=${position.coords.longitude}&username=sourabhmunjal`);
+	const result = await googleMap.json();
+	// const addressComp = result.results.find((r) => {
+	//   return r.types.indexOf('country') > -1;
+	// });
+	this.fetchUpcoming(result.countryCode);
+	}
+	const p = navigator.geolocation.getCurrentPosition(showPosition);
   }
 
   componentDidMount() {
