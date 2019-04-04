@@ -55,19 +55,19 @@ class Upcomings extends Component {
   dialogImgSrc = '';
 
   getCountryCode() {
-    const showPosition = async (position) => {
-      // position = `${position.coords.latitude},${position.coords.longitude}`;
-      // console.log('position');
-      // console.log(position);
-      const googleMap = await fetch(
-        `http://api.geonames.org/countryCodeJSON?lat=${position.coords.latitude}&lng=${position.coords.longitude}&username=sourabhmunjal`);
-      const result = await googleMap.json();
-      // const addressComp = result.results.find((r) => {
-      //   return r.types.indexOf('country') > -1;
-      // });
-      this.fetchUpcoming(result.countryCode);
-    }
-    const p = navigator.geolocation.getCurrentPosition(showPosition);
+    // const showPosition = async (position) => {
+    //   // position = `${position.coords.latitude},${position.coords.longitude}`;
+    //   // console.log('position');
+    //   // console.log(position);
+    //   const googleMap = await fetch(
+    //     `http://api.geonames.org/countryCodeJSON?lat=${position.coords.latitude}&lng=${position.coords.longitude}&username=sourabhmunjal`);
+    //   const result = await googleMap.json();
+    //   // const addressComp = result.results.find((r) => {
+    //   //   return r.types.indexOf('country') > -1;
+    //   // });
+    //   this.fetchUpcoming(result.countryCode);
+    // }
+    // const p = navigator.geolocation.getCurrentPosition(showPosition);
 
   }
 
@@ -105,7 +105,7 @@ class Upcomings extends Component {
 	}
 
   componentWillMount() {
-    this.props.fetchUpcomingDetails('US')
+    // this.props.fetchUpcomingDetails('US')
   }
 
   handleClose = () => {

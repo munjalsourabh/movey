@@ -35,8 +35,18 @@ class UpcomingContainer extends Component {
   }
 
   componentDidMount() {
-    this.getCountryCode();
+    // this.getCountryCode();
 	}
+
+  componentDidUpdate(prevProps) {
+    if(!prevProps.geoDetails.geoDetails && this.props.geoDetails.geoDetails) {
+      this.props.fetchUpcomingDetails(this.props.geoDetails.geoDetails.countryCode);
+    }
+  }
+
+  componentWillMount() {
+    this.props.fetchGeoDetails();
+  }
 
 	openDialog = (dialogData) => {
     this.dialogImgSrc = `http://image.tmdb.org/t/p/w780/${dialogData.posterPath}`;
@@ -50,8 +60,7 @@ class UpcomingContainer extends Component {
 
   render() {
     return (
-      <Upcomings upcomingDetails={this.props.upcomingDetails}
-                 fetchUpcomingDetails={this.props.fetchUpcomingDetails} />
+      <Upcomings upcomingDetails={this.props.upcomingDetails} />
     );
   }
 }
@@ -59,14 +68,16 @@ class UpcomingContainer extends Component {
 const bindActionsToDispatch = (dispatch) => {
   return {
     fetchUpcomingDetails: (countryCode) =>
-        dispatch({type: 'FETCH_UPCOMING_DETAILS', payload: countryCode})
+        dispatch({type: 'FETCH_UPCOMING_DETAILS', payload: countryCode}),
+    fetchGeoDetails: () => dispatch({type: 'FETCH_GEO_DETAILS'})
   }
 };
 
 function mapStateToProps(state) {
   debugger;
   return {
-    upcomingDetails: state['upcomingDetailsReducer']
+    upcomingDetails: state['upcomingDetailsReducer'],
+    geoDetails: state['geoDetailsReducer']
   }
 };
 
