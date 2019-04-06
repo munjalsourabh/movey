@@ -103,7 +103,7 @@ class App extends Component {
                   <Grid container className={elementStyles.demo} >
                      <Grid item xs={3}>
                        <Typography variant="title" color="inherit">
-                         Frames per second
+                         The Film Search
                        </Typography>
                      </Grid>
                      <Grid item xs={6}>
