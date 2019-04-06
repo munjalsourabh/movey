@@ -19,19 +19,12 @@ class UpcomingContainer extends Component {
 
   getCountryCode() {
     const showPosition = async (position) => {
-      // position = `${position.coords.latitude},${position.coords.longitude}`;
-      // console.log('position');
-      // console.log(position);
-      const googleMap = await fetch(
-        `http://api.geonames.org/countryCodeJSON?lat=${position.coords.latitude}&lng=${position.coords.longitude}&username=sourabhmunjal`);
-      const result = await googleMap.json();
-      // const addressComp = result.results.find((r) => {
-      //   return r.types.indexOf('country') > -1;
-      // });
-      this.fetchUpcoming(result.countryCode);
+    	const googleMap = await fetch(
+    	  `https://api.opencagedata.com/geocode/v1/json?q=${position.coords.latitude}+${position.coords.longitude}&key=f1199e35be2e4e2db5733c987cae3fbe`);
+    	const result = await googleMap.json();
+      this.fetchUpcoming(result.results[0].components.country_code);
     }
     const p = navigator.geolocation.getCurrentPosition(showPosition);
-
   }
 
   componentDidMount() {
