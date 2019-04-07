@@ -47,3 +47,8 @@
   font-weight: bold;
   font-size: 15px;
 }
+
+.upcoming-movies {
+  display: inline-block;
+  width: 50%;
+}

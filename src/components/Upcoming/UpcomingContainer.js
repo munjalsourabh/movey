@@ -33,6 +33,7 @@ class UpcomingContainer extends Component {
 
   componentDidUpdate(prevProps) {
     if(!prevProps.geoDetails.geoDetails && this.props.geoDetails.geoDetails) {
+      debugger;
       this.props.fetchUpcomingDetails(this.props.geoDetails.geoDetails.countryCode);
     }
   }
@@ -51,9 +52,15 @@ class UpcomingContainer extends Component {
     this.setState({dialogOpen: false});
   }
 
+  updateUpcoming = (countryCode) => {
+    this.props.fetchUpcomingDetails(countryCode);
+  }
+
   render() {
     return (
-      <Upcomings upcomingDetails={this.props.upcomingDetails} />
+      <Upcomings upcomingDetails={this.props.upcomingDetails}
+                 updateUpcoming={this.updateUpcoming}
+                 countryCode={this.props.geoDetails.geoDetails && this.props.geoDetails.geoDetails.countryCode}/>
     );
   }
 }
@@ -67,7 +74,6 @@ const bindActionsToDispatch = (dispatch) => {
 };
 
 function mapStateToProps(state) {
-  debugger;
   return {
     upcomingDetails: state['upcomingDetailsReducer'],
     geoDetails: state['geoDetailsReducer']

@@ -4,7 +4,7 @@ export default (state = {}, action) => {
       console.log('geo details success');
       return {
         ...state,
-        geoDetails: action.payload
+        geoDetails: {countryCode: action.payload}
       }
 
     default:

@@ -5,15 +5,8 @@ const api = (url) => fetch(url).then(response => response.json())
 function* fetchGeoDetails(action) {
     const pos = yield getPosition();
     try {
-      console.log(action);
-      // yield fetchCoordinates(position).next().next()
-      const geoDetails = yield call(api, `http://api.geonames.org/countryCodeJSON?lat=${pos.coords.latitude}&lng=${pos.coords.longitude}&username=sourabhmunjal`);
-      // const result =  await upcomingDetails.json();
-      debugger;
-      // const a = fetchCoordinates(result);
-      // console.log(a);
-      // a.next();
-      yield put({type:'FETCH_GEO_DETAILS_SUCCESS', payload: geoDetails})
+      const geoDetails = yield call(api, `https://api.opencagedata.com/geocode/v1/json?q=${pos.coords.latitude}+${pos.coords.longitude}&key=f1199e35be2e4e2db5733c987cae3fbe`);
+      yield put({type:'FETCH_GEO_DETAILS_SUCCESS', payload: geoDetails.results[0].components.country_code})
 
     } catch (e) {
       console.log(e)

@@ -11,6 +11,8 @@ import Subheader from 'material-ui/Subheader';
 import Typography from '@material-ui/core/Typography';
 import {GridList, GridTile} from 'material-ui/GridList';
 import {connect} from 'react-redux';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const styles = {
   base: {
@@ -45,6 +47,7 @@ const styles = {
 class Upcomings extends Component {
 
   state = {
+    country: 'in',
     error: null,
     isLoaded: false,
     movies: [],
@@ -54,62 +57,23 @@ class Upcomings extends Component {
 
   dialogImgSrc = '';
 
-  getCountryCode() {
-    // const showPosition = async (position) => {
-    //   // position = `${position.coords.latitude},${position.coords.longitude}`;
-    //   // console.log('position');
-    //   // console.log(position);
-    //   const googleMap = await fetch(
-    //     `http://api.geonames.org/countryCodeJSON?lat=${position.coords.latitude}&lng=${position.coords.longitude}&username=sourabhmunjal`);
-    //   const result = await googleMap.json();
-    //   // const addressComp = result.results.find((r) => {
-    //   //   return r.types.indexOf('country') > -1;
-    //   // });
-    //   this.fetchUpcoming(result.countryCode);
-    // }
-    // const p = navigator.geolocation.getCurrentPosition(showPosition);
-
-  }
-
-  componentDidMount() {
-    // this.getCountryCode();
-	}
-
-  fetchUpcoming(country) {
-    fetch(`https://api.themoviedb.org/3/movie/upcoming?region=${country}&api_key=6d327dfc65804feb593492f59fdabaca`)
-      .then(
-        (result) => {
-          result.json().then((response) => {
-            console.log('upcoming movies ', response);
-            this.setState({
-              movies: response.results
-            })
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
-    });
-  }
-
 	openDialog = (dialogData) => {
     this.dialogImgSrc = `http://image.tmdb.org/t/p/w780/${dialogData.posterPath}`;
 		this.setState({dialogOpen: true})
     this.setState({dialogData: dialogData});
 	}
 
-  componentWillMount() {
-    // this.props.fetchUpcomingDetails('US')
-  }
-
   handleClose = () => {
     this.setState({dialogOpen: false});
+  }
+
+  // componentDidUpdate(prevProps) {
+  //   if(!prevProps.countryCode && this.props.countryCode) {
+  //     this.props.fetchUpcomingDetails(this.props.geoDetails.geoDetails.countryCode);
+  //   }
+  // }
+  updateUpcoming = (event) => {
+    this.props.updateUpcoming(event.target.value)
   }
 
   render() {
@@ -160,7 +124,21 @@ class Upcomings extends Component {
               cellHeight={400}
               cols={3}
               >
-              <Subheader>Upcoming Movies</Subheader>
+              <Subheader className="upcoming-movies">
+                <span>Upcoming Movies</span>
+                <Select
+                    className="country-selector"
+                    value={this.props.countryCode}
+                    onChange={this.updateUpcoming}
+                  >
+                    <MenuItem value="">
+                      <em>Select Country</em>
+                    </MenuItem>
+                    <MenuItem value={'in'}>India</MenuItem>
+                    <MenuItem value={'us'}>USA</MenuItem>
+                    <MenuItem value={'gb'}>Great Britain</MenuItem>
+                </Select>
+              </Subheader>
               {this.props.upcomingDetails.upcoming && this.props.upcomingDetails.upcoming.length && this.props.upcomingDetails.upcoming.map((tile) => (
                 <GridTile
                   key={tile.id}
